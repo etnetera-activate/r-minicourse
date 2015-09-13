@@ -1,0 +1,174 @@
+---
+title       : R Intro
+subtitle    : syntaxe, základy
+author      : Jiri Stepan
+job         : Etnetera
+framework   : html5slides        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+
+```{r setup, include=FALSE}
+# set global chunk options
+opts_chunk$set(cache=TRUE)
+```
+---
+
+
+
+Atomické datové typy
+--------------------
+- číslo `3.14` 
+- celé číslo `3L`
+- komplexní číslo `1+2i`
+- string `"jirka"` nebo `'jirka'`
+- boolean `TRUE` nebo `F`
+- (factor) bude vysvětlen
+
+---
+
+```{r}
+a<-1+1;a
+5 > a
+1 / 0 ; 0 /0
+```
+
+---
+
+Vše je vektor
+--------------------
+Vektor má vždy všechny elementy *stejného typu*.
+```{r}
+b <- 1:6
+b
+c <- seq(10,60,by=10)
+c
+b+c #per item scitani
+```
+
+---
+
+Vektor lze mocně subsetovat
+---------------------------
+
+```{r}
+a <- c('a','b','g','e')
+a[1:2] #seznam indexu jako rozsah
+a[c(1,4)] #vyctem indexu
+a[-3] #vylouceni jednoho indexu
+```
+
+---
+
+Logický index
+-------------
+
+```{r}
+cond = a > 'b' ; cond
+a[cond] #pomoci boolen vektoru
+```
+
+----
+
+Lists
+-----
+* list může obsavat pojmenované elementy různého typu
+* typicky se používá jako návratová struktura
+
+```{r}
+list(vyska=c(180,196,147,165), jmeno=c('jirka','petr','karel','dana'))
+```
+
+--- 
+Dataframe - hlavní struktura
+----------------------------
+
+Pokud má list elementy stejné délky, snadno z něj vznikne *dataframe*, což je základní věc v Rku.
+
+```{r} 
+data <- as.data.frame(list(vyska=c(180,196,147,165), jmeno=c('jirka','petr','karel','dana')))
+data
+```
+
+---
+Dovádíme s dataframes
+---------------------
+
+```{r} 
+data$vyska #nam da vektor odpovidajici sloupci
+data[,'vyska'] #nam da to same
+data[c(1,3),] #prvni a treti radek
+```
+
+---
+
+Dovádíme s dataframes
+---------------------
+Podíváme se jak vypadá jako objekt a manipulujeme s atributy
+
+```{r}
+class(data)
+summary(data) # základní pohled na hodnoty dat
+```
+
+---
+Dovádíme s dataframes
+---------------------
+Objekt si nese i další metainformace.
+
+```{r}
+str(data) #jiný pohled na strukturu objetu
+attributes(data)
+```
+
+---
+Odbočka - co je to ten Factor
+-----------------------------
+
+- jedná se o vektor s konečnou množinou hodnot (`levels`)
+- typicky slouží pro groupování
+- lze definovat explicitně pomocí `as.factor(x)`
+- řada statstických metod a funkcí s ním pracuje speciálním způsobem
+
+---
+
+
+Dovádíme s dataframes
+---------------------
+Podíváme se jak vypadá jako objekt a manipulujeme s atributy
+
+```{r}
+names(data)
+names(data) <- c('sloupec1','sloupec2')
+data
+```
+
+---
+
+Pasti na Javisty & podobnou svoloč feťáckou
+----------------
+* myslete vektrorově - cyklus je většinou špatně
+* `.` nemá žádný význam, je prostě částí názvu. Hojně s používá místo mezery ve funcích typu `as.numeric()` nebo `is.na()` apod.
+* trochu podobný význam jako `.` v javě má `$`
+* pole se indexují od jedné
+* funkce vrací svoji poslední hodnotu nebo to co vyhodí funkce return()
+* doporučuji [code style guide](http://4dpiecharts.com/r-code-style-guide/)
+
+---
+
+Ukázka kódování
+---------------
+Ověříme si na jednoduchém kódu, zda jsou skutečně vektorizované operace rychlejší než cykly
+
+```{r}
+a <- 1:1000
+b <- sqrt(a)
+```
+vs.
+```{r}
+for(i in 1:length(a)){
+  b[i]<-sqrt(a[i])
+}
+```
+
+
+

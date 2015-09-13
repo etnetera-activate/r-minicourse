@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Fáze získání a čištění dat</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<hr/>
+
+<p>title       : Data v R
+subtitle    : principy, čtení, zápis
+author      : Jiri Stepan (<a href="mailto:jiri.stepan@etnetera.cz">jiri.stepan@etnetera.cz</a>)
+job         : Etnetera Activate
+framework   : io2012        # {io2012, html5slides, shower, dzslides, &hellip;}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}</p>
+
+<hr/>
+
+<h2>Fáze získání a čištění dat</h2>
+
+<p>Trvá většinou 80% času. Jejím cílem je získat čistá data pro následnou analýzu. Zahrnuje:</p>
+
+<ul>
+<li>samotné načtění dat z nějakého zdroje</li>
+<li>specifikace typů</li>
+<li>řešení chybějících dat a outlierů</li>
+<li>přejmenovávání a organizace proměných</li>
+<li>převod to tidy formátu</li>
+</ul>
+
+<p>Celý proces musí být perfekně popsán a musí být opakovatelný!</p>
+
+<hr/>
+
+<h2>Základní forma dat - tidy data</h2>
+
+<p>Abychom mohli data zpracovávavat v R, musíme je z RAW data dostat do formátu zvaného <em>Tidy data</em>. Což znamená.</p>
+
+<ul>
+<li>každý soubor obsahuje pozorování jednoho typu</li>
+<li>každý sloupen odpovídá jedné proměné a každá proměná je právě v jednom sloupci.</li>
+<li>každá řádka obsahuje hodnoty proměných pro jedno pozorování nebo <code>missing</code></li>
+</ul>
+
+<hr/>
+
+<h2>Toto nejsou tidy data</h2>
+
+<p>Předpokládejme, že děláme AB test a vyhodnocujeme jej. Nagenerujeme si data pro sedm dnů.</p>
+
+<pre><code class="r">n &lt;- 7
+data &lt;- as.data.frame(list(date = seq(as.Date(&quot;2012-01-01&quot;), as.Date(&quot;2012-01-01&quot;) + 
+    n - 1, by = &quot;1 day&quot;), visitsA = as.integer(rnorm(n = n, mean = 1000, sd = 50)), 
+    convA = rbinom(n = n, size = 1000, prob = 0.01), visitsB = as.integer(rnorm(n = n, 
+        mean = 1000, sd = 50)), convB = rbinom(n = n, size = 1000, prob = 0.02)))
+
+data
+</code></pre>
+
+<pre><code>##         date visitsA convA visitsB convB
+## 1 2012-01-01     999    17     927    16
+## 2 2012-01-02    1024    11    1058    16
+## 3 2012-01-03     990     8     994    15
+## 4 2012-01-04     983    12    1105    23
+## 5 2012-01-05     960    11     958    12
+## 6 2012-01-06     902    11     989    22
+## 7 2012-01-07    1004    10     934    24
+</code></pre>
+
+<hr/>
+
+<h2>Toto jsou spravna data</h2>
+
+<p>Abychom je ziskali, musime si je trochu upravit.</p>
+
+<pre><code class="r">tmpA &lt;- melt(data = data[, c(1, 2, 3)], id = c(&quot;date&quot;, &quot;visitsA&quot;))
+tmpB &lt;- melt(data = data[, c(1, 4, 5)], id = c(&quot;date&quot;, &quot;visitsB&quot;))
+tmpA &lt;- rename(tmpA, c(visitsA = &quot;visits&quot;, variable = &quot;testgroup&quot;, value = &quot;conversions&quot;))
+tmpB &lt;- rename(tmpB, c(visitsB = &quot;visits&quot;, variable = &quot;testgroup&quot;, value = &quot;conversions&quot;))
+data.tidy &lt;- rbind(tmpA, tmpB)
+head(data.tidy)
+</code></pre>
+
+<pre><code>##         date visits testgroup conversions
+## 1 2012-01-01    999     convA          17
+## 2 2012-01-02   1024     convA          11
+## 3 2012-01-03    990     convA           8
+## 4 2012-01-04    983     convA          12
+## 5 2012-01-05    960     convA          11
+## 6 2012-01-06    902     convA          11
+</code></pre>
+
+<hr/>
+
+<p>Takovýmto datům totiž Rko rozumí a počítá s nimi na vstupy</p>
+
+<pre><code class="r">par(mfcol = c(1, 2))
+boxplot(data.tidy$conversions ~ data.tidy$testgroup)
+plot(x = data.tidy$visits, y = data.tidy$conversions, pch = 19, col = as.numeric(data.tidy$testgroup))
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-3"/> </p>
+
+<hr/>
+
+<h2>A pro změnu agregace</h2>
+
+<p>Abychom ale mohli udělat ověření AB testu musíme je agregovat, protože mne nezajímají datumy, ale celý soubor pro A, resp B.</p>
+
+<pre><code class="r">library(plyr)
+data.aggregated &lt;- ddply(data.tidy, .(testgroup), summarize, visits = sum(visits), 
+    conversions = sum(conversions))
+data.aggregated
+</code></pre>
+
+<pre><code>##   testgroup visits conversions
+## 1     convA   6862          80
+## 2     convB   6965         128
+</code></pre>
+
+<hr/>
+
+<p>A finalni test, zda B je opravdu lepsi</p>
+
+<pre><code class="r">test &lt;- prop.test(x = data.aggregated$conversions, n = data.aggregated$visits, 
+    alternative = &quot;two.sided&quot;)
+print(test)
+</code></pre>
+
+<pre><code>## 
+##  2-sample test for equality of proportions with continuity
+##  correction
+## 
+## data:  data.aggregated$conversions out of data.aggregated$visits
+## X-squared = 10.08, df = 1, p-value = 0.001496
+## alternative hypothesis: two.sided
+## 95 percent confidence interval:
+##  -0.010914 -0.002525
+## sample estimates:
+##  prop 1  prop 2 
+## 0.01166 0.01838
+</code></pre>
+
+<hr/>
+
+<h2>Pro zajimavost </h2>
+
+<p>Toto je typicka struktura, ktera je vystupem statistickych funkci a modelu.</p>
+
+<pre><code class="r">str(test)
+</code></pre>
+
+<pre><code>## List of 9
+##  $ statistic  : Named num 10.1
+##   ..- attr(*, &quot;names&quot;)= chr &quot;X-squared&quot;
+##  $ parameter  : Named num 1
+##   ..- attr(*, &quot;names&quot;)= chr &quot;df&quot;
+##  $ p.value    : num 0.0015
+##  $ estimate   : Named num [1:2] 0.0117 0.0184
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;prop 1&quot; &quot;prop 2&quot;
+##  $ null.value : NULL
+##  $ conf.int   : atomic [1:2] -0.01091 -0.00252
+##   ..- attr(*, &quot;conf.level&quot;)= num 0.95
+##  $ alternative: chr &quot;two.sided&quot;
+##  $ method     : chr &quot;2-sample test for equality of proportions with continuity correction&quot;
+##  $ data.name  : chr &quot;data.aggregated$conversions out of data.aggregated$visits&quot;
+##  - attr(*, &quot;class&quot;)= chr &quot;htest&quot;
+</code></pre>
+
+<p>.. ale zpět k datům</p>
+
+<hr/>
+
+<h2>Import dat</h2>
+
+<p>Nejčastější příklady:</p>
+
+<ul>
+<li>Libovolný soubor z disku nebo dostupný na internetu</li>
+<li>CSV pomocí <code>read.csv()</code></li>
+<li>XML pomocí package <code>XML</code></li>
+<li>JSON pomocí package <code>bjson</code></li>
+<li>Google anlaytics pomocí package <code>rga</code></li>
+</ul>
+
+<hr/>
+
+<h2>Pracovní data</h2>
+
+<p>Interní objekty lze ukládat a nahrávat pomocí <code>load()</code> a <code>save()</code> do interní binární formy. Typicky slouží pro uložení vyčištěných a transformovaných dat.</p>
+
+<pre><code class="r">save(data.tidy, data.aggregated, file = &quot;mydata.rda&quot;)
+rm(list = ls())  #delete all objects
+dim(data.tidy)
+</code></pre>
+
+<pre><code>## Error: object &#39;data.tidy&#39; not found
+</code></pre>
+
+<pre><code class="r">load(file = &quot;mydata.rda&quot;)
+dim(data.tidy)
+</code></pre>
+
+<pre><code>## [1] 14  4
+</code></pre>
+
+<hr/>
+
+<h2>Komplexnější příklad číštění dat</h2>
+
+<p>Zkusíme si udělat analýzu rozvodovosti dle dat poskytovaných ČSÚ.</p>
+
+<hr/>
+
+<h2>Další zajímavé packages</h2>
+
+<ul>
+<li><code>httr</code> - for working with http connections</li>
+<li><code>RMySQL</code> - for interfacing with mySQL</li>
+<li><code>RMogo</code> - acesing mongo</li>
+<li><code>bigmemory</code> - for handling data larger than RAM</li>
+<li><code>RHadoop</code> - for interfacing R and Hadoop (by Revolution Analytics)</li>
+<li><code>foreign</code> - for getting data into R from SAS, SPSS, Octave, etc.</li>
+<li><code>rJava</code> - accesing java objects</li>
+<li>&hellip;</li>
+</ul>
+
+</body>
+
+</html>
+

@@ -1,0 +1,1 @@
+"c:\Program Files\R\R-3.2.1\bin\R.exe" CMD BATCH ".\00-fitbit-demo\0-getdata.R"
