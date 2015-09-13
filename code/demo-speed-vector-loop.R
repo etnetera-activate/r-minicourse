@@ -19,34 +19,33 @@ cyklem <- function(x){
   for (i in 1:length(x)){
     sqrt(x[i])
   }
-  
 }
 
+hromadne <- function(x){
+  vapply(x,FUN = sqrt,FUN.VALUE = 1)
+}
 
 #empty dataframe
-data<-as.data.frame(c())
+data<-data.frame()
 
 #a jedem
-for (mocnina in 1:6){
+for (mocnina in 1:7){
+  message(sprintf("Calculating for 10^%d",mocnina))
   max=10^mocnina;
   a=1:max
   
   tv<-zmer(a,vektorove)
   tf<-zmer(a,cyklem)
-  data<-rbind(data,list(N=mocnina,vektor=tv,cyklus=tf))
+  th<-zmer(a,hromadne)
+  
+  data<-rbind(data,data.frame(list(N=mocnina,time=tv,method="vector")))
+  data<-rbind(data,data.frame(list(N=mocnina,time=tf,method="cyclus")))
+  data<-rbind(data,data.frame(list(N=mocnina,time=th,method="sapply")))
+  
 }
 
 data
 
-plot(x=data$N,y=data$cyklus,type="b",col="red",lwd=3)
+library(ggplot2)
 
-lines(data$vektor,col="blue",lwd=3)
-lines(data$mapovani,col="gray",lwd=3)
-
-#a zkusime tim prolozit linearni regresi, COZ JE CELKEM BLBOST, ALE JAKO DEMO
-lm1 <- lm(data$cyklus ~ data$N)
-summary(lm1)
-
-#a zakreslit ji do grafu
-abline(lm1$coefficients,col="black")
-data
+ggplot(data,aes(x=N,y=time,col=method))+geom_line()
