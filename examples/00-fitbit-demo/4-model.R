@@ -2,10 +2,9 @@
 # Fit model
 #####################
 
-setwd("./00-fitbit-demo/")
+try(setwd("./00-fitbit-demo/"))
 load(file = "fitbit.rda")
 
-library(Rcmdr)
 library(MASS)
 
 
@@ -14,6 +13,8 @@ jdt<- fitdt[fitdt$who=="Jirka",-c(14,16)]
 #jdt<-jdt[-40,]
 jfit<-lm(calories.burned ~ steps + time.in.bed + mean.temperaturec,data=jdt)
 jfit<-glm(calories.burned ~ . ,data=jdt)
+
+
 
 summary(jfit)
 coefficients(jfit) # model coefficients
@@ -65,7 +66,7 @@ means<-aggregate(mydata,by=list(fit$cluster),FUN=mean)
 
 # Ward Hierarchical Clustering
 d <- dist(mydata, method = "euclidean") # distance matrix
-fit <- hclust(d, method="ward") 
+fit <- hclustsad(d, method="ward") 
 plot(fit) # display dendogram
 groups <- cutree(fit, k=5) # cut tree into 5 clusters
 # draw dendogram with red borders around the 5 clusters 
@@ -83,7 +84,7 @@ summary(fit) # detailed summary of splits
 plot(fit, uniform=T,branch = 0, compress = T)
 
 text(fit, use.n=TRUE, all=TRUE, cex=.8)
-
+                             
 
 
 

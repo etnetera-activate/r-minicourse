@@ -5,7 +5,7 @@
 ###########################################
 
 #default directory is root directory of R Studio project
-setwd("./00-fitbit-demo/")
+setwd(dir = "00-fitbit-demo/")
 
 #neccesary libraries
 library(dplyr)    #data manipulation
@@ -13,7 +13,7 @@ library(xlsx)     #read data from xlsx
 library(weatherData) # for weather data
 
 #read data
-dt<-read.xlsx(file="./fitbit-data.xlsx",1)
+dt<-read.xlsx(file="./fitbit-data.xlsx",1) 
 
 #fist view on data
 head(dt) #nice, but use GUI instead
@@ -46,10 +46,11 @@ wdata<-getWeatherForDate("kladno", min(dt$date),max(dt$date))
 #rename columns to same convention
 names(wdata)<-tolower(names(wdata))
 names(wdata)<-gsub(pattern = "_",replacement = ".",x = names(wdata))
+str(wdata)
 
 ############################# join data ######################################
 
-fitdt<-cbind(dt,wdata[,c(2:4)]) 
+fitdt<-cbind(dt,wdata[,c(2:4)])
 
 ############################## save and clear ######################################
 

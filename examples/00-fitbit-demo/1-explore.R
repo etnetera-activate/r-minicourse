@@ -5,7 +5,7 @@
 ##############################
 setwd("./00-fitbit-demo/")
 
-library(plyr)
+library(dplyr)
 library(Rcmdr)
 
 load("fitbit.rda")
