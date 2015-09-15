@@ -13,3 +13,4 @@ vignettes/*.html
 vignettes/*.pdf
 .Rproj.user
 *.RData
+*.RData
