@@ -1,0 +1,89 @@
+---
+title: "Načtení a koverze dat"
+author: "Jiri Stepan"
+date: "20. září 2015"
+output: ioslides_presentation
+---
+
+## Načtení dat z CSV file do dataframe
+
+- existuje funkce  **read.table**, který řeší většinu problémů
+- od něj jsou odvozeny **read.csv**, **read.csv2**, ...
+- ty se liší jen defaultním nastavením parametrů
+
+Důležité parametry
+
+- **encoding** nastavuje jak se to má číst. Hodnoty zjistíte **iconvlist()**
+- **as.is = T** zablokuje převod na faktor, datumů na datumy atd. Výrazně zrychluje.
+- **sep** je oddělovač sloupců
+- **nrows** je počet řádek k načtení. Dobré pro testování
+- **fill = T** doplní chybějící sloupce, jinak to spadne
+- .... **?read.table**
+
+
+## Datumy
+
+V základu existují tři datatypy pro Datum/čas.
+
+- **Date** je jenom datum bez času
+- **POSIXct** obsahuje čas a timezone. 
+- **POSIXlt** je to samé, ale v jiné reprezentaci a datově náročnější
+
+```{r}
+as.Date("1.1.2015", format="%d.%m.%Y")
+format(Sys.Date(), format="%d. %a %y")
+```
+
+- **?strptime** pro výpis formátování
+
+## Převody znaků
+
+- V základu existuje funkce **iconv**.
+- Interní reprezentace je v Rku UTF-8
+- Některé starší packages toto nemusí respektovat
+
+```{r}
+iconv("Jiřík Štěpán", to="ASCII//TRANSLIT")
+```
+
+## Převody číslo <-> string a formáty
+
+```{r}
+as.numeric("1234")
+as.numeric("1123 12 e")
+as.character(1234)
+
+```
+
+## Hrátky se stringy - spojování
+
+```{r}
+sprintf("Tohle je cisilko: %d, která mám %s",1234,'rád')
+sprintf("Tohle je cisilko: %d, která mám %s",c(1,2,3),c('rád','nerad','wee'))
+
+paste(c(1,2,3),c('rád','nerad','wee'),sep="|")
+```
+
+## Hrátky se stringy - dělení
+```{r}
+strsplit("Etnetera&Activate", split="&")
+
+x <- c("jirka", "sirka")
+strsplit(x, split="i")
+strsplit(x, split="i")[[1]][2]
+```
+
+
+## Hrátky se stringy - replaces
+```{r}
+substr(c('jirka','sirka'),1,3)
+
+gsub(pattern = "ir", replacement = "<|>",c('jirka','sirka'))
+
+```
+
+## POjďme na příklad
+
+Načteme soubor: **examples/02-get-data/
+
+

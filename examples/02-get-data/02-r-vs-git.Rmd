@@ -15,20 +15,21 @@ Zopakujeme si co vlastně chceme
 
 Mají všichni?
 
-## Rozhození GITu Krok 1
+## Nastavte si GITu globálně
 
 ``` Tools > Global Option > GIT/SVN ```
 
-Zadat cestu ke **GIT** příkazu
-
 ![git global options](imgs/rstudio-git1.png)
 
-## Nastavení GITu u projektu
+## Nastavte GIT u projektu
 
 ``` Tools > Version control > Project setup ```
 
 - nastavit GIT a jedeme
 - u nových projektů lze zvolit založení nového GITu
+- R Studio pozná, že je projekt verzován a ukáže ikonu
+
+![git projekt](imgs/rstudio-git2.png)
 
 
 ## Cvičení: stažení miniškoličky
@@ -37,8 +38,9 @@ Zadat cestu ke **GIT** příkazu
 
 - nebo můžeme zkusit pomocí grafického rozhraní
 - jakmile se stáhne otevřete si v R Studiu projekt **examples/examples.proj**
-- pak stačí jednou za čas dát
+- pak stačí jednou za čas dát **git pull** a dostanete čerstvou verzi kódu
 
 Super!
+
 
 
