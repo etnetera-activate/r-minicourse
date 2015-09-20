@@ -37,8 +37,10 @@ Mají všichni?
 ```git clone https://github.com/etnetera-activate/r-minicourse```
 
 - nebo můžeme zkusit pomocí grafického rozhraní
-- jakmile se stáhne otevřete si v R Studiu projekt **examples/examples.proj**
+- jakmile se stáhne otevřete si v R Studiu projekt **r-minicourse.proj**
+- WOW, vidíte to samé co já
 - pak stačí jednou za čas dát **git pull** a dostanete čerstvou verzi kódu
+- chcete-li měnit založte si vlastní větev na lokále
 
 Super!
 
