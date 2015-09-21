@@ -21,25 +21,36 @@ dt<-read.csv("webmaster-activate.csv", encoding = "UTF-8", as.is=T)
 
 # 1. prejmenujeme promene bez diakritiky
 names(dt)<-iconv(names(dt),to="ASCII//TRANSLIT")
+names(dt)<-gsub(pattern = ".",replacement = "",names(dt), fixed = T)
 names(dt)<-tolower(names(dt))
 
 # 2. kod odpovedi ve skutecnosti je faktor
-dt$kod.odpovedi <- factor(dt$kod.odpovedi, levels=c(404,500))
+dt$kododpovedi <- factor(dt$kododpovedi, levels=c(404,500, 503))
+table(dt$kododpovedi)
+
 
 # 3. chyba souvisejici se spravami je blbost, vyhodime
 dt<-dt[,-3]
 
 # 4. zjisteno a napoledy.prochazeno je datum
-try(as.Date(dt$zjisteno))
+as.Date(dt$zjisteno)
 as.Date(dt$zjisteno, format="%d.%m.%y")
-dt$zjisteno<-as.Date(dt$zjisteno, format="%d.%m.%y")
-dt$naposledy.prochazeno<-as.Date(dt$naposledy.prochazeno, format="%d.%m.%y")
+dt$zjisteno <- as.Date(dt$zjisteno, format="%d.%m.%y")
+dt$naposledyprochazeno<-as.Date(dt$naposledyprochazeno, format="%d.%m.%y")
 
 # 5. platforma je take faktor
 dt$platforma <- factor(dt$platforma)
 table(dt$platforma)
 levels(dt$platforma)<-c("smartphone","mobile","desktop")
-table(dt$platforma)
+
+dt$platforma2 <- factor(dt$platforma, levels=c("mobile","desktop","smartphone"))
+
+
+library(ggplot2)
+ggplot(dt, aes(x=platforma2, fill=platforma2))+geom_bar()
+
+dt2<-dt[order(dt$platforma),]
+
 
 ### ok, co dal?
 ?read.csv

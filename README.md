@@ -1,4 +1,4 @@
-# Miniškolička Rka
+# Miniškolička Rka ..
 
 Sbírka prezentací a příkladů, které slouží pro open učení se Rka v rámci [Etnetera Activate](http://activate.etnetera.cz) 
 
