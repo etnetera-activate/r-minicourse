@@ -15,7 +15,10 @@ dt<-read.csv("webmaster-activate.csv", encoding = "UTF-8") #pozor utf-8 nezafung
 #vysledek je ok, ale nesedi typy dat
 
 #nacteme vse jako stringy, ne jako faktory
-dt<-read.csv("webmaster-activate.csv", encoding = "UTF-8", as.is=T)
+dt<-read.csv("webmaster-activate.csv", encoding = "UTF-8", as.is=T, fill=F)
+
+#nacteni read.table
+dt <- read.table("webmaster-activate.csv", header=T, sep=",", as.is=T, encoding = "UTF-8")
 
 #postupne opravime
 
