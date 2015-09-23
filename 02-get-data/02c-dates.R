@@ -2,7 +2,6 @@
 # Datumy v Rku
 #
 
-
 # hlavní je Date. Jen datum bez casu
 today<-Sys.Date()
 myBirthDate<-as.Date("1976-09-04")
@@ -14,7 +13,12 @@ format(myBirthDate,"%d.%b.%Y v %a")
 Sys.getlocale()
 Sys.setlocale("LC_TIME", "English")
 format(myBirthDate,"%d.%B.%Y a bylo to %a")
-Sys.setlocale("LC_TIME","Czech")
+Sys.setlocale("LC_TIME","Czech") # windows
+Sys.setlocale("LC_TIME","cs_CZ") # Mas OS X
+
+###### musíte si zjistit jaké locales zná OS a jak se jmenují
+# http://stackoverflow.com/questions/20960821/what-is-a-reliable-way-of-getting-allowed-locale-names-in-r
+######
 
 today - myBirthDate
 as.numeric(today - myBirthDate)
