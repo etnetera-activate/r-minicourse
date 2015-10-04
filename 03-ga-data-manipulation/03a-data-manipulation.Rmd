@@ -1,0 +1,98 @@
+---
+title: "Untitled"
+author: "Jiri Stepan"
+date: "25. září 2015"
+output: ioslides_presentation
+---
+
+```{r echo=FALSE, results=FALSE}
+library(reshape2)
+dt <- data.frame(list(
+  medium=c("PPC","ORGANIC","DIRECT","PPC","ORGANIC","DIRECT"),
+  visits=c(1000,1234,1625,2734,1763,2764),
+  variant=c("A","A","A","B","B","B")
+  ))
+
+dt.bad<- dcast(dt, medium ~ variant, value.var='visits')
+```
+
+
+## Tidy data format
+
+základní formát datasetu pro analýzu by měl vypadat takto:
+
+- jedná se o pozorování zapisovaná po řádkách
+- proměné jedné veličiny by měly být v jedno sloupci, ne ve více
+- každá řádka reprezentuje jedno pozorování.
+
+Různé pohledy pro reporting si z toho pak snadno uděláme.
+
+## Terminologický maglajz ##
+
+- tidy ~ long format
+- messy ~ wide format
+- row == observation == řádka, záznam, pozorování
+- column == variable 
+- tabulka == dataset ~ (data.frame nebo jiná struktura co vypadá jako tabulka)
+
+## Příklad messy dat
+```{r}
+dt.bad #ukazka spatneho organizace zakladnich dat
+```
+
+## Příklad dobře
+
+```{r}
+dt #a takhle ma vypadat tiny format spravne
+```
+
+## S datasety se dá manipulovat různě
+
+Příklad - vybereme podmnožinu. Následující dají identický výsledek.
+
+```{r}
+sub<-dt[dt$medium=='PPC',]
+sub<-subset(dt,subset = (medium=='PPC'))
+sub<-dplyr::filter(dt, medium=='PPC' )
+sub
+```
+
+- a budou asi i další varianty
+- znát byste měli zhruba vše
+- používat doporučuji dplyr
+
+## Proč dplyr
+
+- výkon a paměťová efektivita
+- přehledný zápis komplexnějších operací pomocí řetězení
+- mapování na SQL
+- stejná syntaxe může být provedena nad různými datovými strukturami (data.frame, sql)
+
+
+best practice
+- pokud hýbáte s malými datasety, je to jedno. Použijte co je libo
+- pokud chcete kód pustit nad něčím větším, použijte dplyr
+
+
+## Základní oprerace
+
+- výběr sloupců **select()**
+- výběr řádků dle kitérií **filter()**
+- řazení řádků **arance**
+- přidání sloupců
+- aregace
+- spojování tabulek
+
+
+## Výběr sloupců
+
+
+
+
+
+## Pro pokročilé - data.table
+
+- library(data.table)
+- Jedná se o jinou interní reprezentaci datasetu
+- poskytuje lepší výkon pro velká data
+- má drobně jinou syntaxi
