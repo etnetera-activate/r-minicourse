@@ -19,21 +19,28 @@ aggregate(v2 ~ group,FUN = sum, data = data)
 
 #plyr
 library(plyr)
-ddply(data,.(group),summarise,suma=sum(v2))
+ddply(data,.(group),summarise,
+      suma=sum(v2),
+      N=length(v2)
+      )
 
 #dplyr nad dataframe
 library(dplyr)
-data %>% 
+data %>%
+  sample_n(100) %>%
   group_by(group) %>% 
   summarise(
-    suma=sum(v2)
-  )
+    suma = sum(v2)
+  ) %>% 
+  data.frame() %>%
+  arrange(desc(group))
+
 
 #dplyr nad data.table
 #install.packages("data.table")
 library(data.table)
 dt <- data.table(data)
-dt %>% 
+dt %>%
   group_by(group) %>% 
   summarise(
     suma=sum(v2)

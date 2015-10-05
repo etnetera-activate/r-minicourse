@@ -7,8 +7,10 @@ authorize(username = "jiri.stepan@etnetera.cz", cache=T)
 
 profiles <- list_profiles()
 
-etnetera <- filter(profiles, grepl("etnetera.cz",website.url,fixed = T))
-etnetera <- arrange(etnetera, webproperty.id, desc(created))
+etnetera <- profiles %>% filter( grepl("etnetera.cz",website.url,fixed = T)) %>%
+  data.frame() %>%
+  arrange(webproperty.id, created)
+
 firstProfiles <- etnetera %>%
   group_by(webproperty.id) %>%
   summarise(id = first(id))
@@ -21,9 +23,13 @@ for(i in 1:length(etnetera_main)){
   gaData <- get_ga(profile.id = profileId, start.date = "30daysAgo", end.date = "yesterday",
                  metrics = "ga:users,ga:sessions,ga:pageviews")
   gaData$profileId <- profileId
-  try (out <- rbind(out, gaData))
+  if(class(gaData) == "data.frame"){
+    out <- rbind(out, gaData)
+  }
 }
 
 ### merge together
 etnetera_data <- etnetera_main %>%
-  left_join(out, by = c("id" = "profileId"))
+  right_join(out, by = c("id" = "profileId"))
+
+
