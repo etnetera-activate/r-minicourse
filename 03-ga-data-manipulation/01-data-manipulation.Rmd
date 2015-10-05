@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Data manipulation"
 author: "Jiri Stepan"
 date: "25. září 2015"
 output: ioslides_presentation
@@ -24,6 +24,7 @@ základní formát datasetu pro analýzu by měl vypadat takto:
 - jedná se o pozorování zapisovaná po řádkách
 - proměné jedné veličiny by měly být v jedno sloupci, ne ve více
 - každá řádka reprezentuje jedno pozorování.
+- každý typ pozorování je jedna tabulka
 
 Různé pohledy pro reporting si z toho pak snadno uděláme.
 
@@ -40,10 +41,13 @@ Různé pohledy pro reporting si z toho pak snadno uděláme.
 dt.bad #ukazka spatneho organizace zakladnich dat
 ```
 
+ - Kolik vidíte proměných?
+ - Kolik vidíte pozorování?
+
 ## Příklad dobře
 
 ```{r}
-dt #a takhle ma vypadat tiny format spravne
+dt[,c(1,3,2)] #a takhle ma vypadat tiny format spravne
 ```
 
 ## S datasety se dá manipulovat různě
@@ -51,9 +55,9 @@ dt #a takhle ma vypadat tiny format spravne
 Příklad - vybereme podmnožinu. Následující dají identický výsledek.
 
 ```{r}
-sub<-dt[dt$medium=='PPC',]
-sub<-subset(dt,subset = (medium=='PPC'))
-sub<-dplyr::filter(dt, medium=='PPC' )
+sub <- dt[dt$medium=='PPC',]
+sub <- subset(dt,subset = (medium=='PPC'))
+sub <- dplyr::filter(dt, medium=='PPC' )
 sub
 ```
 
@@ -74,25 +78,40 @@ best practice
 - pokud chcete kód pustit nad něčím větším, použijte dplyr
 
 
-## Základní oprerace
+## Základní oprerace v dplyru
 
+- tidy <-> messy format **gather()** vs. **spread()**
 - výběr sloupců **select()**
 - výběr řádků dle kitérií **filter()**
-- řazení řádků **arance**
-- přidání sloupců
-- aregace
-- spojování tabulek
+- řazení řádků **arrange**
+- přidání sloupců **mutate**
+- aregace **group_by**
+- sumarizace **sumarise**
+- spojování tabulek **left_join, ...*
+- plus pomocné funkce ...
 
 
-## Výběr sloupců
+## Knihovna  RGA
+
+- Library (RGA)
+- nejlepší knihovna pro Google analytics 
+- git/skadarmar/rga se nerozvíjí a buguje
+- https://cran.r-project.org/web/packages/RGA/index.html
+
+- Nápověda:
+  - reference k funkcím (typicky PDF)
+  - vignetes (příklady užití)
+  - mohou být dopl%nkové informace (github, knihy, ...)
 
 
-
-
-
-## Pro pokročilé - data.table
+## Pro bigdata - data.table
 
 - library(data.table)
 - Jedná se o jinou interní reprezentaci datasetu
 - poskytuje lepší výkon pro velká data
-- má drobně jinou syntaxi
+- má drobně jinou základní syntaxi, ale v dplyru se chová stejně
+
+## K dalšímu studiu
+
+- (https://rstudio-pubs-static.s3.amazonaws.com/58498_dd3b603ba4fb4b469bb1c57b5a951c39.html)[vynikající od dplyr a tidyr]
+- (https://cran.r-project.org/web/packages/dplyr/vignettes/)[dplyr vignetes]

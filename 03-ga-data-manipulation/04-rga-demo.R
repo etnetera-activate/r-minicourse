@@ -9,6 +9,7 @@
 library(RGA)
 library(dplyr)
 
+#provedeme autorizaci
 authorize(username = "jiri.stepan@etnetera.cz", cache = T)
 
 gaProfiles <- list_profiles()
@@ -41,8 +42,7 @@ gaData <- do.call(rbind, lapply(dates, function(date) {
 gaDataSummary <- aggregate(. ~ source + keyword , FUN = sum, data = gaData)
 #olala
 
-
-#summarize - dplyr
+#summarize pomocí dplyr
 gaDataSummary3 <- gaData %>%
   group_by(source,keyword) %>%
   summarise_each(funs(sum)) %>%

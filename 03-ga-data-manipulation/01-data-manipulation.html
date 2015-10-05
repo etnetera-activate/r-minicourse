@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Untitled</title>
+  <title>Data manipulation</title>
 
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -25,7 +25,7 @@
     var SLIDE_CONFIG = {
       // Slide settings
       settings: {
-                title: 'Untitled',
+                title: 'Data manipulation',
                         useBuilds: true,
         usePrettify: true,
         enableSlideAreas: true,
@@ -94,19 +94,30 @@
           </hgroup>
   </slide>
 
-<slide class=''><hgroup><h2>Tiny data format</h2></hgroup><article  id="tiny-data-format">
+<slide class=''><hgroup><h2>Tidy data format</h2></hgroup><article  id="tidy-data-format">
 
-<p>základní formát datasetu pro anlaýzu by měl vypadat takto:</p>
+<p>základní formát datasetu pro analýzu by měl vypadat takto:</p>
 
 <ul>
-<li>jedná se o pozorování</li>
+<li>jedná se o pozorování zapisovaná po řádkách</li>
 <li>proměné jedné veličiny by měly být v jedno sloupci, ne ve více</li>
 <li>každá řádka reprezentuje jedno pozorování.</li>
+<li>každý typ pozorování je jedna tabulka</li>
 </ul>
 
 <p>Různé pohledy pro reporting si z toho pak snadno uděláme.</p>
 
-</article></slide><slide class=''><hgroup><h2>Příklad špatně</h2></hgroup><article  id="priklad-spatne">
+</article></slide><slide class=''><hgroup><h2>Terminologický maglajz</h2></hgroup><article  id="terminologicky-maglajz">
+
+<ul>
+<li>tidy ~ long format</li>
+<li>messy ~ wide format</li>
+<li>row == observation == řádka, záznam, pozorování</li>
+<li>column == variable</li>
+<li>tabulka == dataset ~ (data.frame nebo jiná struktura co vypadá jako tabulka)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Příklad messy dat</h2></hgroup><article  id="priklad-messy-dat">
 
 <pre class = 'prettyprint lang-r'>dt.bad #ukazka spatneho organizace zakladnich dat</pre>
 
@@ -115,25 +126,30 @@
 ## 2 ORGANIC 1234 1763
 ## 3     PPC 1000 2734</pre>
 
+<ul>
+<li>Kolik vidíte proměných?</li>
+<li>Kolik vidíte pozorování?</li>
+</ul>
+
 </article></slide><slide class=''><hgroup><h2>Příklad dobře</h2></hgroup><article  id="priklad-dobre">
 
-<pre class = 'prettyprint lang-r'>dt #a takhle ma vypadat tiny format spravne</pre>
+<pre class = 'prettyprint lang-r'>dt[,c(1,3,2)] #a takhle ma vypadat tiny format spravne</pre>
 
-<pre >##    medium visits variant
-## 1     PPC   1000       A
-## 2 ORGANIC   1234       A
-## 3  DIRECT   1625       A
-## 4     PPC   2734       B
-## 5 ORGANIC   1763       B
-## 6  DIRECT   2764       B</pre>
+<pre >##    medium variant visits
+## 1     PPC       A   1000
+## 2 ORGANIC       A   1234
+## 3  DIRECT       A   1625
+## 4     PPC       B   2734
+## 5 ORGANIC       B   1763
+## 6  DIRECT       B   2764</pre>
 
 </article></slide><slide class=''><hgroup><h2>S datasety se dá manipulovat různě</h2></hgroup><article  id="s-datasety-se-da-manipulovat-ruzne">
 
 <p>Příklad - vybereme podmnožinu. Následující dají identický výsledek.</p>
 
-<pre class = 'prettyprint lang-r'>sub&lt;-dt[dt$medium==&#39;PPC&#39;,]
-sub&lt;-subset(dt,subset = (medium==&#39;PPC&#39;))
-sub&lt;-dplyr::filter(dt, medium==&#39;PPC&#39; )
+<pre class = 'prettyprint lang-r'>sub &lt;- dt[dt$medium==&#39;PPC&#39;,]
+sub &lt;- subset(dt,subset = (medium==&#39;PPC&#39;))
+sub &lt;- dplyr::filter(dt, medium==&#39;PPC&#39; )
 sub</pre>
 
 <pre >##   medium visits variant
@@ -149,20 +165,55 @@ sub</pre>
 </article></slide><slide class=''><hgroup><h2>Proč dplyr</h2></hgroup><article  id="proc-dplyr">
 
 <ul>
-<li>výkon</li>
-<li>dokáže pracovat</li>
-<li>přehledný zápis komplexnějších operací</li>
-<li>stejná syntaxe může být provedena nad data.frame i data.table</li>
+<li>výkon a paměťová efektivita</li>
+<li>přehledný zápis komplexnějších operací pomocí řetězení</li>
+<li>mapování na SQL</li>
+<li>stejná syntaxe může být provedena nad různými datovými strukturami (data.frame, sql)</li>
 </ul>
 
-<p>best practice - pokud hýbáte s málými datasety, je to jedno. Použijte co je libo - pokud chcete kód pustit nad něčím větším, použijte dplyr</p>
+<p>best practice - pokud hýbáte s malými datasety, je to jedno. Použijte co je libo - pokud chcete kód pustit nad něčím větším, použijte dplyr</p>
+
+</article></slide><slide class=''><hgroup><h2>Základní oprerace v dplyru</h2></hgroup><article  id="zakladni-oprerace-v-dplyru">
+
+<ul>
+<li>tidy &lt;-&gt; messy format <strong>gather()</strong> vs. <strong>spread()</strong></li>
+<li>výběr sloupců <strong>select()</strong></li>
+<li>výběr řádků dle kitérií <strong>filter()</strong></li>
+<li>řazení řádků <strong>arrange</strong></li>
+<li>přidání sloupců <strong>mutate</strong></li>
+<li>aregace <strong>group_by</strong></li>
+<li>sumarizace <strong>sumarise</strong></li>
+<li>spojování tabulek **left_join, &#8230;*</li>
+<li>plus pomocné funkce &#8230;</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Knihovna RGA</h2></hgroup><article  id="knihovna-rga">
+
+<ul>
+<li>Library (RGA)</li>
+<li>nejlepší knihovna pro Google analytics</li>
+<li>git/skadarmar/rga se nerozvíjí a buguje</li>
+<li><a href='https://cran.r-project.org/web/packages/RGA/index.html' title=''>https://cran.r-project.org/web/packages/RGA/index.html</a></li>
+<li>Nápověda:</li>
+<li>reference k funkcím (typicky PDF)</li>
+<li>vignetes (příklady užití)</li>
+<li>mohou být dopl%nkové informace (github, knihy, &#8230;)</li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>Pro pokročilé - data.table</h2></hgroup><article  id="pro-pokrocile---data.table">
 
 <ul>
+<li>library(data.table)</li>
 <li>Jedná se o jinou interní reprezentaci datasetu</li>
 <li>poskytuje lepší výkon pro velká data</li>
 <li>má drobně jinou syntaxi</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>K dalšímu studiu</h2></hgroup><article  id="k-dalsimu-studiu">
+
+<ul>
+<li>(<a href='https://rstudio-pubs-static.s3.amazonaws.com/58498_dd3b603ba4fb4b469bb1c57b5a951c39.html' title=''>https://rstudio-pubs-static.s3.amazonaws.com/58498_dd3b603ba4fb4b469bb1c57b5a951c39.html</a>)[vynikající od dplyr a tidyr]</li>
+<li>(<a href='https://cran.r-project.org/web/packages/dplyr/vignettes/' title=''>https://cran.r-project.org/web/packages/dplyr/vignettes/</a>)[dplyr vignetes]</li>
 </ul></article></slide>
 
 
