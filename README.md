@@ -8,7 +8,8 @@ Celý předpokládaný obsah je k [náhledu na google drive](https://docs.google
 
 Prozatím vznikly dvě videa ze sessions:
 
-* [Session 1: Intro a demo zpracování dat phrase](https://www.youtube.com/watch?v=vT-TBG1r7Lk&feature=youtu.be)
-* [Session 2: Assigny a čtení dat z CSV](https://www.youtube.com/watch?v=SscbQikK1Sc&edit=vd)
+* [Session 1: Intro a demo zpracování dat phrase](https://www.youtube.com/watch?v=vT-TBG1r7Lk)
+* [Session 2: Assigny a čtení dat z CSV](https://www.youtube.com/watch?v=SscbQikK1Sc)
+* [Session 3: Manipulace s daty](https://youtu.be/7livBVPn-t8)
 
 Pokud byste měli zájem o Rko či práci u nás ozvěte se mi na jiri.stepan(at)etnetera.cz nebo na https://twitter.com/JiriStepan
