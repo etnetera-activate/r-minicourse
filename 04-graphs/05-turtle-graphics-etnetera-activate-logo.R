@@ -4,7 +4,7 @@ library("TurtleGraphics")
 #draw logo of Etnetera using turtlegraphics
 
 #parameters of the logo 
-color = "blue"
+color = "#009de0"
 lwd <- 75 #witdh 
 r1 <- 2.1 #bottom half circle
 r2 <- 1.5 #upper 270degree arc
@@ -15,7 +15,7 @@ l3 <- 180 #final segment (right -down)
 #drawing the logo
 turtle_init(width = 800, height = 800)
 turtle_lwd(lwd);
-turtle_col("blue");
+turtle_col(color);
 
 turtle_do({
   turtle_setpos(y=250, x=600)
