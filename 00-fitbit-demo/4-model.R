@@ -8,12 +8,20 @@ load(file = "fitbit.rda")
 library(MASS)
 
 
+
 #### how many calories is one step?
 jdt<- fitdt[fitdt$who=="Jirka",-c(14,16)]
-#jdt<-jdt[-40,]
-jfit<-lm(calories.burned ~ steps + time.in.bed + mean.temperaturec,data=jdt)
+jdt<-jdt[-40,]
+jfit<-lm(calories.burned ~ steps ,data=jdt)
 jfit<-glm(calories.burned ~ . ,data=jdt)
 
+summary()
+
+ggplot(jdt, aes(x=steps, y=calories.burned, col=day.class))+
+  geom_point(size=5, alpha=0.5)+
+  stat_smooth(method="lm",se = F)+
+  theme_bw()+
+  labs(x="kroky",y="spálené kalorie", col="typ dne")
 
 
 summary(jfit)

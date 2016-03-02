@@ -7,6 +7,8 @@
 library(ggplot2)
 library(corrplot)
 library(scales)
+library(dplyr)
+library(Rcmdr)
 
 setwd("./00-fitbit-demo/")
 load("fitbit.rda")
@@ -27,9 +29,6 @@ ggplot(gdt,aes(x=date,y=steps,fill=day.class))+geom_bar(stat="identity")+
   labs(title="",x="",y="kroků za den")+
   scale_fill_discrete(guide=guide_legend(title="typ dne"))
 
-ggplot(gdt,aes(x=date))+
-  geom_bar(aes(y=minutes.sedentary),stat="identity",position="stacked")+
-  geom_bar(aes(y=minutes.lightly.active,fill="blue"),stat="identity",position="stacked")
 
 ##### 
 #s cim koreluji kalorie
@@ -71,9 +70,14 @@ scatterplot(gdt$steps, gdt$calories.burned)
 
 scatterplot(gdt$minutes.sedentary / 60, gdt$activity.calories)
 
-ggplot(gdt,aes(x=day.class,y=calories.burned,fill=day.class))+geom_boxplot()+theme_bw()
-ggplot(gdt,aes(x=day.class,y=time.in.bed / 60,fill=day.class))+geom_boxplot()+theme_bw()
-ggplot(gdt,aes(x=day.class,y=minutes.sedentary / 60,fill=day.class))+geom_boxplot()+theme_bw()
+ggplot(gdt,aes(x=day.class,y=calories.burned,fill=day.class))+
+  geom_boxplot()+theme_bw()+
+  labs(x="typ dne", fill="typ dne",y="spálené kalorie [kcal]")+
+  scale_y_continuous(breaks=seq(1000,5500, by=250))
+
+
+ggplot(gdt,aes(x=day.class,y=time.in.bed / 60,fill=day.class))+geom_boxplot()+theme_bw()+labs(x="typ dne", fill="typ dne",y="doba spánku [hod]")+scale_y_continuous(breaks=seq(0,12,by=0.5))
+ggplot(gdt,aes(x=day.class,y= / 60,fill=day.class))+geom_boxplot()+theme_bw()
 
 #anlalýza po dnech mimo
 adata<-filter(gdt,day.class %in% c("weekend","work"))
@@ -88,12 +92,16 @@ ggplot(gdt,aes(x=date))+
 
 
 work<-filter(gdt,day.class=="work")
-ggplot(work,aes(x=day.note,y=activity.calories,fill=day.note))+geom_boxplot()+theme_bw()
-ggplot(work,aes(x=day.note,y=activity.calo,fill=day.note))+geom_boxplot()+theme_bw()
+ggplot(work,aes(x=day.note,y=calories.burned,fill=day.note))+geom_boxplot()+theme_bw()
 
 
 #a jdeme na spanek
-ggplot(gdt,aes(x=day.class,y=number.of.awakenings,fill=day.class))+geom_boxplot()+theme_bw()
+ggplot(gdt,aes(x=day.class,y=number.of.awakenings / time.in.bed * 60,fill=day.class))+
+  geom_boxplot()+theme_bw()+
+  labs(x="typ dne", fill="typ dne", y="počet probuzení na hodinu spánku")+
+  scale_y_continuous(breaks=seq(0,5,by=0.2))
+
+
 ggplot(gdt,aes(x=day.class,y=minutes.awake,fill=day.class))+geom_boxplot()+theme_bw()
 
 scatterplot(gdt$time.in.bed, gdt$number.of.awakenings)
