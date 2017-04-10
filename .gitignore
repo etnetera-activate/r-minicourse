@@ -12,3 +12,4 @@ vignettes/*.pdf
 .RData
 .httr-oauth
 .jiri.stepan@etnetera.cz-token.rds
+.rda
