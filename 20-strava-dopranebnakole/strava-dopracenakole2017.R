@@ -113,8 +113,8 @@ msg <- sprintf("Until %d.5.2017 you ride %.2f km, comparing to %.2f km in last y
 #and create supercool graph
 ggplot(days, aes(x=day,y=distance.cumsum,fill=factor(year)))+
   geom_area(alpha="0.5", position="identity")+
-  labs(x="day in May",y="total ride distance", fill="year", title = msg)+
-  scale_x_continuous(breaks=1:31)+
+  labs(x="day in May",y="total ride distance [km]", fill="year", title = msg)+
+  scale_x_continuous(breaks=1:31, minor_breaks = F)+
   scale_y_continuous(breaks=seq(0,max(days$distance.cumsum)*1.2, by=25))+
   scale_fill_manual(values = c("gray", "blue")) +
   theme_bw()
