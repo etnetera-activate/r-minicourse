@@ -9,11 +9,10 @@
 ####################################################################
 
 #uncoment for first install
-#install.packages(c("rStrava","dplyr","tidyr", "ggplot2"))
+#install.packages(c("rStrava","dplyr", "ggplot2"))
 
 library(rStrava)
 library(dplyr)
-library(tidyr)
 library(ggplot2)
 
 ############################# strava.com Configuration #################################################
@@ -84,10 +83,9 @@ data <- filter(data, year %in% c(2016,2017),month==5, day != 1, day!= 8,isWorkDa
 
 #filter only bike rides
 table(data$type)
-data <- filter(data, type=="Ride")
 
-#create cumulatice sums by days
-days <- df %>%
+#calculate cumulative sums by days
+days <- data %>%
   filter(type=="Ride") %>%
   group_by(year) %>%
   mutate(
