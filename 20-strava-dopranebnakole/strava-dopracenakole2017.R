@@ -29,7 +29,8 @@ app_secret <- 'v3rys3cr3t0k3nUcang3tinStrVa'
 
 #######################################################################################################
 
-source("./20-strava-dopranebnakole/strava-dopracenakole2017-tokens.R")
+#you can store secret data in separate file and don't publish it to git
+#source("./20-strava-dopranebnakole/strava-dopracenakole2017-tokens.R")
 
 # create the authentication token
 stoken <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret, cache=T))
