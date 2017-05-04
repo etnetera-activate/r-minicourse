@@ -29,7 +29,7 @@ app_secret <- 'v3rys3cr3t0k3nUcang3tinStrVa'
 #######################################################################################################
 
 #you can store secret data in separate file and don't publish it to git
-#source("./20-strava-dopranebnakole/strava-dopracenakole2017-tokens.R")
+source("./20-strava-dopranebnakole/strava-dopracenakole2017-tokens.R")
 
 # create the authentication token
 stoken <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret, cache=T))
@@ -96,7 +96,8 @@ days <- data %>%
   )
 
 #fill last day by last value for better visualization
-last2017day <- filter(days, year == 2017)[-1]
+last2017day <- days[days$year == 2017,]
+last2017day <- days[nrow(last2017day),]
 last2017day$date <- as.Date("2017-05-31")
 last2017day$day <- 31
 days <- rbind(days, last2017day)
