@@ -77,16 +77,18 @@ data$dayofweek <- format(data$date, format= "%w") # 0..6, 0 is Sunday
 data$isWorkDay <- (data$dayofweek %in% c("1","2","3","4","5"))
 data$dayindex <- as.numeric(format(data$date, format= "%j")) #poradi dne v roce
 
+#spocitame si, zda se da danna aktivita povazivat za DoPraceNaKole.
+data$isToWorkContest <- (data$month == 5) & (data$year %in% c(2016,2017)) & ((data$commute) | ((data$type=="Ride") & (data$day != 1) & (data$day!= 8) & data$isWorkDay))
 
 #filter two last years, May only, workdays only and except free days
-data <- filter(data, year %in% c(2016,2017),month==5, day != 1, day!= 8,isWorkDay)
+data <- filter(data, isToWorkContest)
 
 #filter only bike rides
 table(data$type)
 
 #calculate cumulative sums by days
 days <- data %>%
-  filter(type=="Ride") %>%
+  filter() %>%
   group_by(year) %>%
   mutate(
     distance.cumsum = cumsum(distance),
@@ -97,7 +99,7 @@ days <- data %>%
 
 #fill last day by last value for better visualization
 last2017day <- days[days$year == 2017,]
-last2017day <- days[nrow(last2017day),]
+last2017day <- last2017day[nrow(last2017day),]
 last2017day$date <- as.Date("2017-05-31")
 last2017day$day <- 31
 days <- rbind(days, last2017day)
@@ -111,10 +113,10 @@ msg <- sprintf("Until %d.5.2017 you ride %.2f km, comparing to %.2f km in last y
 
 #and create supercool graph
 ggplot(days, aes(x=day,y=distance.cumsum,fill=factor(year)))+
-  geom_area(alpha="0.5", position="identity")+
+  geom_area(alpha="0.3", position="identity")+
   labs(x="day in May",y="total ride distance [km]", fill="year", title = msg)+
   scale_x_continuous(breaks=1:31, minor_breaks = F)+
   scale_y_continuous(breaks=seq(0,max(days$distance.cumsum)*1.2, by=25))+
-  scale_fill_manual(values = c("gray", "blue")) +
+  scale_fill_manual(values = c("red", "blue")) +
   theme_bw()
 
