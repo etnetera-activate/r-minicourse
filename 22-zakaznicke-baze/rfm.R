@@ -29,7 +29,7 @@ df.rfm <- df %>%
     cummonetary.ratio = cumsum(monetary) / totalMonetary
   ) 
   
-summary(df.sum)
+summary(df.rfm)
 
 ggplot(df.rfm, aes(x=recency))+geom_density(fill="blue")
 ggplot(df.rfm, aes(x=frequency))+geom_density(fill="blue")+scale_x_log10()
@@ -37,7 +37,7 @@ ggplot(df.rfm, aes(x=monetary))+geom_density(fill="blue")+scale_x_log10()
 
 ggplot(df.rfm, aes(x = monetary, y = frequency, col=recency))+geom_point(alpha=0.3, size=1)+scale_x_log10()+scale_y_log10()+geom_jitter()
 
-ggplot(df.rfm, aes(x=1:nrow(df.rfm),y=cummonetary. / sum(df.rfm$monetary)))+geom_line()
+ggplot(df.rfm, aes(x=1:nrow(df.rfm),y=cummonetary / sum(df.rfm$monetary)))+geom_line()
 
 segmentRecency <- function(recency){
   if (recency < 100 ) return(1)
