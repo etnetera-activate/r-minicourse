@@ -8,6 +8,7 @@ library(jsonlite)
 
 #seznam dnu v tudnu
 weekdays <- c("Po","Ut","St","Ct","Pa","So","Ne")
+intervention1_start <- as.Date("2020-10-22")
 
 #primarni data z https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ 
 data <- read.csv("https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/nakazeni-vyleceni-umrti-testy.csv", 
@@ -69,6 +70,15 @@ data <- data %>%
 
 # wow mame dataframe!
 
+# 7d prumer
+ggplot(data, aes(x=datum, y=nakazenych_7d))+
+  geom_line(col="red", size=1.5)+
+  geom_line(aes(y=nakazenych), col="gray")+
+  scale_x_date(limits=c(as.Date("2020-08-01"),Sys.Date()))+
+  scale_y_continuous(breaks=seq(0,50000,1000))+
+  geom_vline(xintercept = intervention1_start, col="red", linetype="dashed")+
+  labs(y="potvrzených nakažených denně a 7d klouzavý průměr", title="Počet pozitivních testů s vyznačeným datem vládních opatření")+
+  theme_bw()
 
 #graf1: Celkova cisla
 coef_right_axis <- 15000 / 500 # meritko pro pravou osu.
@@ -85,7 +95,7 @@ ggplot(data, aes(x=datum))+
   #pridame pravou osu
   scale_y_continuous(sec.axis = sec_axis(~./coef_right_axis, name = "nových hospitalizací a úmrtí denně"))+
   labs(title="Přírůstky denně pro hlavní metriky", col="metrika")+
-  theme_bw()+scale_y_log10()
+  theme_bw()
 
 
 #graf 2: Vývoj po dnech
